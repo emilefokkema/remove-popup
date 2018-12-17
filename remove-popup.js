@@ -2,7 +2,12 @@
 	var kebabCase = function(camelCase){
 		return camelCase.replace(/(?<=[a-z])[A-Z]/g, function(m){return "-"+m.toLowerCase();});
 	};
-	var findRulesForClass = function(cssClass){
+	var removePropFromStyleDeclaration = function(declaration, name, value){
+		if(declaration[name] == value){
+			declaration.removeProperty(kebabCase(name));
+		}
+	};
+	var findRulesForElement = function(el){
 		var sheets = document.styleSheets;
 		var result = [];
 		for(var i=0;i<sheets.length;i++){
@@ -16,45 +21,24 @@
 			for(var j=0;j<rules.length;j++){
 				var rule = rules[j];
 				var selectorText = rule.selectorText;
-				if(!selectorText){
-					continue;
-				}
-				var selectors = selectorText.split(/\s*,\s*/g);
-				for(var k=0;k<selectors.length;k++){
-					var selector = selectors[k];
-					var classNameMatch = selector.match(/[^\.]+$/);
-					if(classNameMatch && classNameMatch[0] == cssClass){
-						result.push(rule);
-					}
+				if(el.matches(selectorText)){
+					result.push(rule);
 				}
 			}
 			
 		}
 		return result;
 	};
-	var removePropFromRulesForClass = function(cssClass, name, value){
-		var rules = findRulesForClass(cssClass);
+	var removePropFromRulesForElement = function(el, name, value){
+		var rules = findRulesForElement(el);
 		for(var i=0;i<rules.length;i++){
 			var rule = rules[i];
-			var styleDeclaration = rule.style;
-			if(styleDeclaration[name] == value){
-				styleDeclaration.removeProperty(kebabCase(name));
-			}
+			removePropFromStyleDeclaration(rule.style, name, value);
 		}
 	};
 	var undoCssProp = function(el, name, value){
-		var styleDeclaration = el.style;
-		if(styleDeclaration[name] == value){
-			styleDeclaration.removeProperty(kebabCase(name));
-		}
-		var classAttr = el.getAttribute("class");
-		if(!classAttr){
-			return;
-		}
-		var classes = classAttr.split(/\s+/g);
-		for(var i=0;i<classes.length;i++){
-			removePropFromRulesForClass(classes[i], name, value);
-		}
+		removePropFromStyleDeclaration(el.style, name, value);
+		removePropFromRulesForElement(el, name, value);
 	};
 	var undoCss = function(el, props){
 		for(var name in props){
