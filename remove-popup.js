@@ -73,7 +73,21 @@
 		overflowY: "hidden"
 	});
 
-	removeElementsWithCss(window.innerWidth / 2, window.innerHeight / 2, {position: "fixed"});
+	var pointsToClear = [
+		{
+			x: window.innerWidth / 2,
+			y: window.innerHeight / 2
+		},
+		{
+			x: window.innerWidth / 2,
+			y : 0
+		}
+	];
+
+	for(var i=0;i<pointsToClear.length;i++){
+		var x = pointsToClear[i].x, y = pointsToClear[i].y;
+		removeElementsWithCss(x, y, {position: "fixed"});
+	}
 	
 	
 
