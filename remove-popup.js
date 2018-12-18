@@ -4,8 +4,12 @@
 	};
 	var removePropFromStyleDeclaration = function(declaration, name, value){
 		if(declaration[name] == value){
-			declaration.removeProperty(kebabCase(name));
+			var kebab = kebabCase(name);
+			console.log("removing property '"+kebab+"' from style declaration");
+			declaration.removeProperty(kebab);
+			return true;
 		}
+		return false;
 	};
 	var findRulesForElement = function(el){
 		var sheets = document.styleSheets;
@@ -33,11 +37,15 @@
 		var rules = findRulesForElement(el);
 		for(var i=0;i<rules.length;i++){
 			var rule = rules[i];
-			removePropFromStyleDeclaration(rule.style, name, value);
+			if(removePropFromStyleDeclaration(rule.style, name, value)){
+				console.log("removed property from css rule for element '"+el.tagName+"'");
+			}
 		}
 	};
 	var undoCssProp = function(el, name, value){
-		removePropFromStyleDeclaration(el.style, name, value);
+		if(removePropFromStyleDeclaration(el.style, name, value)){
+			console.log("removed property from element '"+el.tagName+"'");
+		}
 		removePropFromRulesForElement(el, name, value);
 	};
 	var undoCss = function(el, props){
@@ -64,6 +72,7 @@
 				var propValue = props[propName];
 				while((foundElement = findParentElementOrSelfWithProp(document.elementFromPoint(x, y), propName, propValue)) != null){
 					foundElement.remove();
+					console.log("removed element '"+foundElement.tagName+"' at position ("+x+","+y+") with propery '"+propName+"' = '"+propValue+"'");
 				}
 			}
 		}
