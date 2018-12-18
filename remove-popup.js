@@ -47,12 +47,33 @@
 			}
 		}
 	};
+	var findParentElementOrSelfWithProp = function(el, propName, propValue){
+		var style = getComputedStyle(el);
+		if(style[propName] == propValue){
+			return el;
+		}
+		if(el.parentElement != null){
+			return findParentElementOrSelfWithProp(el.parentElement, propName, propValue);
+		}
+		return null;
+	};
+	var removeElementsWithCss = function(x, y, props){
+		for(var propName in props){
+			if(props.hasOwnProperty(propName)){
+				var foundElement;
+				var propValue = props[propName];
+				while((foundElement = findParentElementOrSelfWithProp(document.elementFromPoint(x, y), propName, propValue)) != null){
+					foundElement.remove();
+				}
+			}
+		}
+	};
 	undoCss(document.body,{
 		overflowX: "hidden",
 		overflowY: "hidden"
 	});
 
-	console.log("here I am");
+	removeElementsWithCss(window.innerWidth / 2, window.innerHeight / 2, {position: "fixed"});
 	
 	
 
