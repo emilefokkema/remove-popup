@@ -55,6 +55,11 @@
 			}
 		}
 	};
+	var doForSelfAndParents = function(el, toDo){
+		do{
+			toDo(el);
+		}while((el = el.parentElement) != null)
+	};
 	var findParentElementOrSelfWithProp = function(el, propName, propValue){
 		var style = getComputedStyle(el);
 		if(style[propName] == propValue){
@@ -77,11 +82,13 @@
 			}
 		}
 	};
-	undoCss(document.body,{
-		overflowX: "hidden",
-		overflowY: "hidden"
+	doForSelfAndParents(document.body, function(el){
+		undoCss(el, {
+			overflowX: "hidden",
+			overflowY: "hidden"
+		});
 	});
-
+	
 	var pointsToClear = [
 		{
 			x: window.innerWidth / 2,
