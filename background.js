@@ -6,9 +6,9 @@ var getCurrentTab = function(callback){
 };
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-  if (changeInfo.status == 'complete') {
-
-    chrome.tabs.executeScript(tabId, {file: "remove-popup.js"});
+  if (changeInfo.status == 'complete' && tab.url.match(/^chrome:/) == null) {
+  	chrome.tabs.executeScript(tabId, {file: "remove-popup.js"});
+    
 
   }
 })
