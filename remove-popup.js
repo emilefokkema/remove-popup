@@ -1,4 +1,5 @@
 (function(){
+	var latestContextMenuElement;
 	var kebabCase = function(camelCase){
 		return camelCase.replace(/(?<=[a-z])[A-Z]/g, function(m){return "-"+m.toLowerCase();});
 	};
@@ -108,6 +109,15 @@
 			act();
 		}
 	});
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		if(request.removeFromContextMenu){
+			var rect = latestContextMenuElement.getBoundingClientRect();
+			removeElementsWithCss(rect.x, rect.y, {position: "fixed"});
+		}
+	});
+	document.addEventListener('contextmenu',function(e){
+		latestContextMenuElement = e.path[0];
+	})
 
 })();
 

@@ -6,6 +6,7 @@
 		"activeTab",
 		 "tabs",
         "notifications",
+        "contextMenus",
         "http://*/",
         "https://*/"
 	],
