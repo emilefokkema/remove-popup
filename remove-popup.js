@@ -82,32 +82,43 @@
 			}
 		}
 	};
-	doForSelfAndParents(document.body, function(el){
-		undoCss(el, {
-			overflowX: "hidden",
-			overflowY: "hidden"
+	var act = function(){
+		doForSelfAndParents(document.body, function(el){
+			undoCss(el, {
+				overflowX: "hidden",
+				overflowY: "hidden"
+			});
 		});
-	});
-	
-	var pointsToClear = [
-		{
-			x: window.innerWidth / 2,
-			y: window.innerHeight / 2
-		},
-		{
-			x: window.innerWidth / 2,
-			y : 0
+		
+		var pointsToClear = [
+			{
+				x: window.innerWidth / 2,
+				y: window.innerHeight / 2
+			},
+			{
+				x: window.innerWidth / 2,
+				y : 0
+			}
+		];
+
+		for(var i=0;i<pointsToClear.length;i++){
+			var x = pointsToClear[i].x, y = pointsToClear[i].y;
+			removeElementsWithCss(x, y, {position: "fixed"});
 		}
-	];
-
-	for(var i=0;i<pointsToClear.length;i++){
-		var x = pointsToClear[i].x, y = pointsToClear[i].y;
-		removeElementsWithCss(x, y, {position: "fixed"});
-	}
-	
+	};
 	
 
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		if(request.removePopup){
+			act();
+		}
+	});
+
+	document.addEventListener('DOMNodeInserted',function(){act();})
+
+	act();
 
 })();
 
 //https://www.businessinsider.com/iceland-has-made-it-illegal-to-pay-women-less-than-men-2018-1?international=true&r=US&IR=T
+//http://www.spiegel.de/politik/ausland/tuerkei-kritik-an-recep-tayyip-erdogan-fuehrt-zu-strafen-gegen-zwei-tv-sender-a-1245499.html
