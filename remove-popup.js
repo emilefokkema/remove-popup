@@ -106,10 +106,6 @@
 			{
 				x: window.innerWidth / 2,
 				y: window.innerHeight / 2
-			},
-			{
-				x: window.innerWidth / 2,
-				y : 0
 			}
 		];
 
