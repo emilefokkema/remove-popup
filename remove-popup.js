@@ -1,4 +1,16 @@
 (function(){
+	var throttle = function(f, interval){
+		var busy = false;
+		return function(){
+			if(!busy){
+				busy = true;
+				setTimeout(function(){
+					f();
+					busy = false;
+				}, interval);
+			}
+		};
+	};
 	var kebabCase = function(camelCase){
 		return camelCase.replace(/(?<=[a-z])[A-Z]/g, function(m){return "-"+m.toLowerCase();});
 	};
@@ -106,7 +118,7 @@
 			removeElementsWithCss(x, y, {position: "fixed"});
 		}
 	};
-	
+	act = throttle(act, 500);
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		if(request.removePopup){
