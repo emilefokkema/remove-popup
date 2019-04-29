@@ -62,6 +62,9 @@
 		}while((el = el.parentElement) != null)
 	};
 	var findParentElementOrSelfWithProp = function(el, propName, propValue){
+		if(!el){
+			return null;
+		}
 		var style = getComputedStyle(el);
 		if(style[propName] == propValue){
 			return el;
@@ -76,7 +79,8 @@
 			if(props.hasOwnProperty(propName)){
 				var foundElement;
 				var propValue = props[propName];
-				while((foundElement = findParentElementOrSelfWithProp(document.elementFromPoint(x, y), propName, propValue)) != null){
+				while((foundElement = findParentElementOrSelfWithProp(document.elementFromPoint(x, y), propName, propValue)) != null
+					&& foundElement.nodeName !== "HTML"){
 					foundElement.remove();
 					console.log("removed element '"+foundElement.tagName+"' at position ("+x+","+y+") with propery '"+propName+"' = '"+propValue+"'");
 				}
@@ -87,7 +91,8 @@
 		doForSelfAndParents(document.body, function(el){
 			undoCss(el, {
 				overflowX: "hidden",
-				overflowY: "hidden"
+				overflowY: "hidden",
+				position: "fixed"
 			});
 		});
 		
@@ -123,3 +128,4 @@
 
 //https://www.businessinsider.com/iceland-has-made-it-illegal-to-pay-women-less-than-men-2018-1?international=true&r=US&IR=T
 //http://www.spiegel.de/politik/ausland/tuerkei-kritik-an-recep-tayyip-erdogan-fuehrt-zu-strafen-gegen-zwei-tv-sender-a-1245499.html
+//https://www.sueddeutsche.de/kultur/debuetroman-die-bestie-in-menschengestalt-1.3954646
