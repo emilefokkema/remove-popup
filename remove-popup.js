@@ -129,3 +129,4 @@
 //https://www.businessinsider.com/iceland-has-made-it-illegal-to-pay-women-less-than-men-2018-1?international=true&r=US&IR=T
 //http://www.spiegel.de/politik/ausland/tuerkei-kritik-an-recep-tayyip-erdogan-fuehrt-zu-strafen-gegen-zwei-tv-sender-a-1245499.html
 //https://www.sueddeutsche.de/kultur/debuetroman-die-bestie-in-menschengestalt-1.3954646
+//https://www.washingtonpost.com/entertainment/books/book-subtitles-are-getting-ridiculously-long-what-is-going-on/2019/06/04/3150bcc8-86c3-11e9-98c1-e945ae5db8fb_story.html?utm_term=.3b05894366ab
