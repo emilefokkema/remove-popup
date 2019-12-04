@@ -132,3 +132,4 @@
 //https://www.washingtonpost.com/entertainment/books/book-subtitles-are-getting-ridiculously-long-what-is-going-on/2019/06/04/3150bcc8-86c3-11e9-98c1-e945ae5db8fb_story.html?utm_term=.3b05894366ab
 //https://www.thewindowsclub.com/startup-folder-in-windows-8
 //https://www.space.com/30610-scale-of-solar-system-amazing-video.html
+//https://lareviewofbooks.org/article/is-there-a-crisis-of-truth/
